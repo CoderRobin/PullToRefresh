@@ -40,6 +40,7 @@ class PullToRefreshLayout extends LinearLayout {
 		private float mLastDown;
 	    private int mHeaderHeight=0;
 	    private boolean mDispatchTargetTouchDown=false;
+		private PullListener mPullListener;
         public PullToRefreshLayout(Context context, AttributeSet attrs, int defStyle) {
 			super(context, attrs, defStyle);
 		}
@@ -56,6 +57,10 @@ class PullToRefreshLayout extends LinearLayout {
 	protected void onFinishInflate() {
 		super.onFinishInflate();
 		initViews();
+	}
+
+	public void setPullListener(PullListener pullListener){
+		mPullListener=pullListener;
 	}
 
 	private void initViews(){
@@ -168,6 +173,11 @@ class PullToRefreshLayout extends LinearLayout {
 		}
 		if(distance>mHeaderHeight){
 			distance=mHeaderHeight;
+		}
+		int margin=(int) distance - mHeaderHeight;
+		int progress=(int)(distance*100/mHeaderHeight);
+		if(mPullListener!=null){
+			mPullListener.onPullProgress(progress);
 		}
 		setHeaderMargin((int) distance - mHeaderHeight);
 	}
