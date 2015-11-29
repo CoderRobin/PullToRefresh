@@ -22,13 +22,13 @@
  * THE SOFTWARE.
  */
 
-package com.coderrobin.customview.pullToRefresh;
+package com.coderrobin.customview.pullToRefresh.base;
 
 
 
 
 
-interface IContentView  {
+public interface IContentView {
 
 	boolean isTop();
 

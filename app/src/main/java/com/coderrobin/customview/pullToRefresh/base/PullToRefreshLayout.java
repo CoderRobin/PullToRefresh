@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package com.coderrobin.customview.pullToRefresh;
+package com.coderrobin.customview.pullToRefresh.base;
 
 
 import android.content.Context;
@@ -38,7 +38,6 @@ class PullToRefreshLayout extends LinearLayout {
     	private View mContentView;
     	private View mFooter;
 		private float mLastDown;
-    	private float mDistance;
 	    private int mHeaderHeight=0;
 	    private boolean mDispatchTargetTouchDown=false;
         public PullToRefreshLayout(Context context, AttributeSet attrs, int defStyle) {
@@ -64,13 +63,11 @@ class PullToRefreshLayout extends LinearLayout {
 			if(childCount>=2) {
 				mHeader = getChildAt(0);
 				mContentView =getChildAt(1);
-				measureView(mHeader);
-				mHeaderHeight=mHeader.getMeasuredHeight();
-				setHeaderMarginPosition(-mHeaderHeight);
 			}
 			if(childCount==3) {
 				mFooter = getChildAt(2);
 			}
+			resetHeaderMargin();
 		}
 
 	@Override
@@ -134,43 +131,59 @@ class PullToRefreshLayout extends LinearLayout {
 				mDispatchTargetTouchDown=false;
 				return true;
 			case MotionEvent.ACTION_MOVE:
-				mDistance=event.getY()-mLastDown;
-				if(mDistance>0&&isChildOnTop()){
-					if(mHeaderHeight==0){
-						mHeaderHeight=mHeader.getHeight();
-					}
-					if(mDistance>mHeaderHeight){
-						mDistance=mHeaderHeight;
-					}
-					setHeaderMarginPosition((int) mDistance-mHeaderHeight);
+				float distance=event.getY()-mLastDown;
+				if(distance>0&&isChildOnTop()){
+					updateHeaderPosition(distance);
 					return true;
 				}
 				else {
-					if (mDispatchTargetTouchDown) {
-						mContentView.dispatchTouchEvent(event);
-					} else {
-						MotionEvent obtain = MotionEvent.obtain(event);
-						obtain.setAction(MotionEvent.ACTION_DOWN);
-						mDispatchTargetTouchDown = true;
-						mContentView.dispatchTouchEvent(obtain);
-					}
-					mContentView.dispatchTouchEvent(event);
+					dispatchTouchEventToContentView(event);
 				}
 				break;
 			case MotionEvent.ACTION_UP:
 			case MotionEvent.ACTION_CANCEL:
-				setHeaderMarginPosition((int) -mHeaderHeight);
+				resetHeaderMargin();
 				mDispatchTargetTouchDown=false;
 				break;
 		}
 		return super.onTouchEvent(event);
 	}
 
-	private void setHeaderMarginPosition(int distance){
+
+	private void dispatchTouchEventToContentView(MotionEvent event){
+		if (mDispatchTargetTouchDown) {
+			mContentView.dispatchTouchEvent(event);
+		} else {
+			MotionEvent obtain = MotionEvent.obtain(event);
+			obtain.setAction(MotionEvent.ACTION_DOWN);
+			mDispatchTargetTouchDown = true;
+			mContentView.dispatchTouchEvent(obtain);
+		}
+		mContentView.dispatchTouchEvent(event);
+	}
+
+	private void updateHeaderPosition(float distance){
+		if(mHeaderHeight==0){
+			mHeaderHeight=mHeader.getHeight();
+		}
+		if(distance>mHeaderHeight){
+			distance=mHeaderHeight;
+		}
+		setHeaderMargin((int) distance - mHeaderHeight);
+	}
+
+	private void setHeaderMargin(int margin){
 		LayoutParams layoutParams=(LayoutParams)mHeader.getLayoutParams();
-		layoutParams.setMargins(0, distance, 0, 0);
+		layoutParams.setMargins(0, margin, 0, 0);
 		mHeader.setLayoutParams(layoutParams);
 	}
+
+	private void resetHeaderMargin(){
+		if(mHeaderHeight==0){
+			measureView(mHeader);
+			mHeaderHeight=mHeader.getMeasuredHeight();
+		}
+		setHeaderMargin((int) -mHeaderHeight);	}
 
 	private void measureView(View child) {
 		ViewGroup.LayoutParams lp = child.getLayoutParams();

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.coderrobin.customview.pullToRefresh.PullToRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.coderrobin.customview.pullToRefresh.base.PullToRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <ImageView
@@ -9,10 +9,10 @@
         android:background="@android:color/black"
         />
 
-    <com.coderrobin.customview.pullToRefresh.PullToFreshListView
+    <com.coderrobin.customview.pullToRefresh.impl.PullToFreshListView
         android:id="@+id/pull_to_fresh_listview"
         android:layout_width="match_parent"
         android:layout_height="500dp"/>
 
 
-</com.coderrobin.customview.pullToRefresh.PullToRefreshLayout>
+</com.coderrobin.customview.pullToRefresh.base.PullToRefreshLayout>

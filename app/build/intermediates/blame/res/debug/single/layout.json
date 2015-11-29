@@ -1,19 +1,11 @@
 [
     {
-        "merged": "/Users/renzhibin/Desktop/CommonViews/app/build/intermediates/res/merged/debug/layout/ripple_layout.xml",
-        "source": "/Users/renzhibin/Desktop/CommonViews/app/src/main/res/layout/ripple_layout.xml"
-    },
-    {
         "merged": "/Users/renzhibin/Desktop/CommonViews/app/build/intermediates/res/merged/debug/layout/pull_fresh_layout.xml",
         "source": "/Users/renzhibin/Desktop/CommonViews/app/src/main/res/layout/pull_fresh_layout.xml"
     },
     {
         "merged": "/Users/renzhibin/Desktop/CommonViews/app/build/intermediates/res/merged/debug/layout/activity_pull_to_refresh.xml",
         "source": "/Users/renzhibin/Desktop/CommonViews/app/src/main/res/layout/activity_pull_to_refresh.xml"
-    },
-    {
-        "merged": "/Users/renzhibin/Desktop/CommonViews/app/build/intermediates/res/merged/debug/layout/nest_radiogroup.xml",
-        "source": "/Users/renzhibin/Desktop/CommonViews/app/src/main/res/layout/nest_radiogroup.xml"
     },
     {
         "merged": "/Users/renzhibin/Desktop/CommonViews/app/build/intermediates/res/merged/debug/layout/demo_item.xml",

@@ -1,4 +1,4 @@
-package com.coderrobin.customview.pullToRefresh;
+package com.coderrobin.customview.pullToRefresh.demo;
 
 import android.content.Context;
 import android.view.LayoutInflater;

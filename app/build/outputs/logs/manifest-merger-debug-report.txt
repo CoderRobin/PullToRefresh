@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/renzhibin/Desktop/CommonViews/app/src/main/AndroidManifest.xml:2:1-32:12
+ADDED from /Users/renzhibin/Desktop/CommonViews/app/src/main/AndroidManifest.xml:2:1-28:12
 	xmlns:android
 		ADDED from /Users/renzhibin/Desktop/CommonViews/app/src/main/AndroidManifest.xml:2:11-69
 	package
@@ -26,7 +26,7 @@ ADDED from /Users/renzhibin/Desktop/CommonViews/app/src/main/AndroidManifest.xml
 		INJECTED from /Users/renzhibin/Desktop/CommonViews/app/src/main/AndroidManifest.xml
 		INJECTED from /Users/renzhibin/Desktop/CommonViews/app/src/main/AndroidManifest.xml
 application
-ADDED from /Users/renzhibin/Desktop/CommonViews/app/src/main/AndroidManifest.xml:12:5-30:19
+ADDED from /Users/renzhibin/Desktop/CommonViews/app/src/main/AndroidManifest.xml:12:5-26:19
 	android:label
 		ADDED from /Users/renzhibin/Desktop/CommonViews/app/src/main/AndroidManifest.xml:15:9-41
 	android:allowBackup
@@ -35,25 +35,19 @@ ADDED from /Users/renzhibin/Desktop/CommonViews/app/src/main/AndroidManifest.xml
 		ADDED from /Users/renzhibin/Desktop/CommonViews/app/src/main/AndroidManifest.xml:14:9-45
 	android:theme
 		ADDED from /Users/renzhibin/Desktop/CommonViews/app/src/main/AndroidManifest.xml:16:9-40
-activity#com.coderrobin.customview.RippleVIew.RippleActivity
-ADDED from /Users/renzhibin/Desktop/CommonViews/app/src/main/AndroidManifest.xml:17:9-20:20
+activity#com.coderrobin.customview.pullToRefresh.demo.PullToRefreshActivity
+ADDED from /Users/renzhibin/Desktop/CommonViews/app/src/main/AndroidManifest.xml:17:9-25:20
 	android:label
-		ADDED from /Users/renzhibin/Desktop/CommonViews/app/src/main/AndroidManifest.xml:19:13-45
+		ADDED from /Users/renzhibin/Desktop/CommonViews/app/src/main/AndroidManifest.xml:19:13-67
 	android:name
-		ADDED from /Users/renzhibin/Desktop/CommonViews/app/src/main/AndroidManifest.xml:18:13-54
-activity#com.coderrobin.customview.pullToRefresh.PullToRefreshActivity
-ADDED from /Users/renzhibin/Desktop/CommonViews/app/src/main/AndroidManifest.xml:21:9-29:20
-	android:label
-		ADDED from /Users/renzhibin/Desktop/CommonViews/app/src/main/AndroidManifest.xml:23:13-67
-	android:name
-		ADDED from /Users/renzhibin/Desktop/CommonViews/app/src/main/AndroidManifest.xml:22:13-64
+		ADDED from /Users/renzhibin/Desktop/CommonViews/app/src/main/AndroidManifest.xml:18:13-69
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from /Users/renzhibin/Desktop/CommonViews/app/src/main/AndroidManifest.xml:24:13-28:29
+ADDED from /Users/renzhibin/Desktop/CommonViews/app/src/main/AndroidManifest.xml:20:13-24:29
 action#android.intent.action.MAIN
-ADDED from /Users/renzhibin/Desktop/CommonViews/app/src/main/AndroidManifest.xml:25:17-69
+ADDED from /Users/renzhibin/Desktop/CommonViews/app/src/main/AndroidManifest.xml:21:17-69
 	android:name
-		ADDED from /Users/renzhibin/Desktop/CommonViews/app/src/main/AndroidManifest.xml:25:25-66
+		ADDED from /Users/renzhibin/Desktop/CommonViews/app/src/main/AndroidManifest.xml:21:25-66
 category#android.intent.category.LAUNCHER
-ADDED from /Users/renzhibin/Desktop/CommonViews/app/src/main/AndroidManifest.xml:27:17-77
+ADDED from /Users/renzhibin/Desktop/CommonViews/app/src/main/AndroidManifest.xml:23:17-77
 	android:name
-		ADDED from /Users/renzhibin/Desktop/CommonViews/app/src/main/AndroidManifest.xml:27:27-74
+		ADDED from /Users/renzhibin/Desktop/CommonViews/app/src/main/AndroidManifest.xml:23:27-74

@@ -71,18 +71,15 @@ containing a value of this type.
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f080004;
+        public static final int action_settings=0x7f080003;
         public static final int header=0x7f080000;
         public static final int pull_to_fresh_listview=0x7f080001;
-        public static final int ripple_view=0x7f080003;
         public static final int textview=0x7f080002;
     }
     public static final class layout {
         public static final int activity_pull_to_refresh=0x7f030000;
         public static final int demo_item=0x7f030001;
-        public static final int nest_radiogroup=0x7f030002;
-        public static final int pull_fresh_layout=0x7f030003;
-        public static final int ripple_layout=0x7f030004;
+        public static final int pull_fresh_layout=0x7f030002;
     }
     public static final class menu {
         public static final int main=0x7f070000;
