@@ -26,6 +26,7 @@ package com.coderrobin.customview.pullToRefresh.base;
 
 
 import android.content.Context;
+import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -38,8 +39,6 @@ class PullToRefreshLayout extends LinearLayout {
     private View mContentView;
     private View mFooter;
     private float mLastDown;
-    private int mHeaderHeight = 0;
-    private PullListener mPullListener;
 
     public PullToRefreshLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -59,20 +58,19 @@ class PullToRefreshLayout extends LinearLayout {
         initViews();
     }
 
-    public void setPullListener(PullListener pullListener) {
-        mPullListener = pullListener;
-    }
 
     private void initViews() {
         int childCount = getChildCount();
         if (childCount >= 2) {
             mHeader = getChildAt(0);
+            measureView(mHeader);
             mContentView = getChildAt(1);
         }
         if (childCount == 3) {
             mFooter = getChildAt(2);
         }
-        resetHeaderMargin();
+
+        ((IHeaderView)mHeader).hide();
     }
 
     @Override
@@ -108,14 +106,14 @@ class PullToRefreshLayout extends LinearLayout {
 
 
     @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        int action = ev.getAction();
+    public boolean onInterceptTouchEvent(MotionEvent event) {
+        final int action = MotionEventCompat.getActionMasked(event);
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-                mLastDown = ev.getY();
+                mLastDown = event.getY();
                 break;
             case MotionEvent.ACTION_MOVE:
-                float distance = ev.getY() - mLastDown;
+                float distance = event.getY() - mLastDown;
                 if (distance > 0 && isChildOnTop()) {
                     return true;
                 }
@@ -139,18 +137,18 @@ class PullToRefreshLayout extends LinearLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        int action = event.getAction();
+        final int action = MotionEventCompat.getActionMasked(event);
         switch (action) {
             case MotionEvent.ACTION_MOVE:
                 float distance = event.getY() - mLastDown;
                 if (distance > 0 && isChildOnTop()) {
-                    updateHeaderPosition(distance);
+                    updateHeaderProgress(distance);
                     return true;
                 }
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                resetHeaderMargin();
+                ((IHeaderView)mHeader).hide();
                 break;
         }
         return super.onTouchEvent(event);
@@ -158,34 +156,16 @@ class PullToRefreshLayout extends LinearLayout {
 
 
 
-    private void updateHeaderPosition(float distance) {
-        if (mHeaderHeight == 0) {
-            mHeaderHeight = mHeader.getHeight();
+    private void updateHeaderProgress(float distance) {
+        int headerDragTotalHeight=((IHeaderView)mHeader).getDragTotalHeight();
+        if (distance > headerDragTotalHeight) {
+            distance = headerDragTotalHeight;
         }
-        if (distance > mHeaderHeight) {
-            distance = mHeaderHeight;
-        }
-        int margin = (int) distance - mHeaderHeight;
-        int progress = (int) (distance * 100 / mHeaderHeight);
-        if (mPullListener != null) {
-            mPullListener.onPullProgress(progress);
-        }
-        setHeaderMargin((int) distance - mHeaderHeight);
+        int margin = (int) distance - headerDragTotalHeight;
+        int progress = (int) (distance * 100 / headerDragTotalHeight);
+        ((IHeaderView)mHeader).onProgress(progress);
     }
 
-    private void setHeaderMargin(int margin) {
-        LayoutParams layoutParams = (LayoutParams) mHeader.getLayoutParams();
-        layoutParams.setMargins(0, margin, 0, 0);
-        mHeader.setLayoutParams(layoutParams);
-    }
-
-    private void resetHeaderMargin() {
-        if (mHeaderHeight == 0) {
-            measureView(mHeader);
-            mHeaderHeight = mHeader.getMeasuredHeight();
-        }
-        setHeaderMargin((int) -mHeaderHeight);
-    }
 
     private void measureView(View child) {
         ViewGroup.LayoutParams lp = child.getLayoutParams();

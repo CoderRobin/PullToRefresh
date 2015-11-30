@@ -64,4 +64,6 @@ public class PullToFreshListView extends ListView implements IContentView {
                         getAdapter().getCount() - 1;
     }
 
+
+
 }
