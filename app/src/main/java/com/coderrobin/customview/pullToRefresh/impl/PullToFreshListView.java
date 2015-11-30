@@ -33,35 +33,35 @@ import com.coderrobin.customview.pullToRefresh.base.IContentView;
 
 
 public class PullToFreshListView extends ListView implements IContentView {
-	public PullToFreshListView(Context context) {
-		super(context);
-	}
+    public PullToFreshListView(Context context) {
+        super(context);
+    }
 
-	public PullToFreshListView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-	}
+    public PullToFreshListView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
 
-	public PullToFreshListView(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-	}
+    public PullToFreshListView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+    }
 
-	@Override
-	public boolean isTop() {
+    @Override
+    public boolean isTop() {
 
-		 Log.d("coderrobin",
-				 "### first pos = " + getFirstVisiblePosition()
-						 + ", getTop= " +  getChildAt(0).getTop()+":"+getChildAt(0).getPaddingTop());
-		return getFirstVisiblePosition() == 0
-				&& getChildAt(0).getTop()>= getChildAt(0).getPaddingTop();
-	}
+        Log.d("coderrobin",
+                "### first pos = " + getFirstVisiblePosition()
+                        + ", getTop= " + getChildAt(0).getTop() + ":" + getChildAt(0).getPaddingTop());
+        return getFirstVisiblePosition() == 0
+                && getChildAt(0).getTop() >= getChildAt(0).getPaddingTop();
+    }
 
-	@Override
-	public boolean isBottom() {
-		// Log.d(VIEW_LOG_TAG, "### last position = " +
+    @Override
+    public boolean isBottom() {
+        // Log.d(VIEW_LOG_TAG, "### last position = " +
 
-		return getAdapter() != null&&
-				getLastVisiblePosition() ==
-				getAdapter().getCount() - 1;
-	}
+        return getAdapter() != null &&
+                getLastVisiblePosition() ==
+                        getAdapter().getCount() - 1;
+    }
 
 }

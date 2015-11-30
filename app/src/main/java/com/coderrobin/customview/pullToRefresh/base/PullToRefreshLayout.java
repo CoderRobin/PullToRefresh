@@ -34,179 +34,171 @@ import android.widget.LinearLayout;
 
 
 class PullToRefreshLayout extends LinearLayout {
-		private View mHeader;
-    	private View mContentView;
-    	private View mFooter;
-		private float mLastDown;
-	    private int mHeaderHeight=0;
-	    private boolean mDispatchTargetTouchDown=false;
-		private PullListener mPullListener;
-        public PullToRefreshLayout(Context context, AttributeSet attrs, int defStyle) {
-			super(context, attrs, defStyle);
-		}
+    private View mHeader;
+    private View mContentView;
+    private View mFooter;
+    private float mLastDown;
+    private int mHeaderHeight = 0;
+    private PullListener mPullListener;
 
-		public PullToRefreshLayout(Context context, AttributeSet attrs) {
-			super(context, attrs);
-		}
+    public PullToRefreshLayout(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+    }
 
-		public PullToRefreshLayout(Context context) {
-			super(context);
+    public PullToRefreshLayout(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    public PullToRefreshLayout(Context context) {
+        super(context);
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        initViews();
+    }
+
+    public void setPullListener(PullListener pullListener) {
+        mPullListener = pullListener;
+    }
+
+    private void initViews() {
+        int childCount = getChildCount();
+        if (childCount >= 2) {
+            mHeader = getChildAt(0);
+            mContentView = getChildAt(1);
+        }
+        if (childCount == 3) {
+            mFooter = getChildAt(2);
+        }
+        resetHeaderMargin();
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        int resultWidth = 0;
+        int modeWidth = MeasureSpec.getMode(widthMeasureSpec);
+        int sizeWidth = MeasureSpec.getSize(widthMeasureSpec);
+        if (modeWidth == MeasureSpec.EXACTLY) {
+            resultWidth = sizeWidth;
+        } else {
+            resultWidth = mContentView.getMeasuredWidth();
+            if (modeWidth == MeasureSpec.AT_MOST) {
+                resultWidth = Math.min(resultWidth, sizeWidth);
+            }
         }
 
-	@Override
-	protected void onFinishInflate() {
-		super.onFinishInflate();
-		initViews();
-	}
+        int resultHeight = 0;
+        int modeHeight = MeasureSpec.getMode(heightMeasureSpec);
+        int sizeHeight = MeasureSpec.getSize(heightMeasureSpec);
 
-	public void setPullListener(PullListener pullListener){
-		mPullListener=pullListener;
-	}
+        if (modeHeight == MeasureSpec.EXACTLY) {
+            resultHeight = sizeHeight;
+        } else {
+            resultHeight = mContentView.getMeasuredHeight();
+            if (modeHeight == MeasureSpec.AT_MOST) {
+                resultHeight = Math.min(resultHeight, sizeHeight);
+            }
+        }
 
-	private void initViews(){
-			int childCount=getChildCount();
-			if(childCount>=2) {
-				mHeader = getChildAt(0);
-				mContentView =getChildAt(1);
-			}
-			if(childCount==3) {
-				mFooter = getChildAt(2);
-			}
-			resetHeaderMargin();
-		}
-
-	@Override
-	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-		int resultWidth = 0;
-		int modeWidth = MeasureSpec.getMode(widthMeasureSpec);
-		int sizeWidth = MeasureSpec.getSize(widthMeasureSpec);
-		if (modeWidth == MeasureSpec.EXACTLY) {
-			resultWidth = sizeWidth;
-		}
-		else {
-			resultWidth =mContentView.getMeasuredWidth();
-			if (modeWidth == MeasureSpec.AT_MOST) {
-				resultWidth = Math.min(resultWidth, sizeWidth);
-			}
-		}
-
-		int resultHeight = 0;
-		int modeHeight = MeasureSpec.getMode(heightMeasureSpec);
-		int sizeHeight = MeasureSpec.getSize(heightMeasureSpec);
-
-		if (modeHeight == MeasureSpec.EXACTLY) {
-			resultHeight = sizeHeight;
-		} else {
-			resultHeight = mContentView.getMeasuredHeight();
-			if (modeHeight == MeasureSpec.AT_MOST) {
-				resultHeight = Math.min(resultHeight, sizeHeight);
-			}
-		}
-
-		setMeasuredDimension(resultWidth, resultHeight);
-	}
+        setMeasuredDimension(resultWidth, resultHeight);
+    }
 
 
-	@Override
-	public boolean onInterceptTouchEvent(MotionEvent ev) {
-		int action=ev.getAction();
-		switch (action){
-			case MotionEvent.ACTION_DOWN:
-				mLastDown=ev.getY();
-				break;
-			case MotionEvent.ACTION_MOVE:
-				return true;
-		}
-		return false;
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        int action = ev.getAction();
+        switch (action) {
+            case MotionEvent.ACTION_DOWN:
+                mLastDown = ev.getY();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                float distance = ev.getY() - mLastDown;
+                if (distance > 0 && isChildOnTop()) {
+                    return true;
+                }
+                return false;
+        }
+        return false;
 
-	}
+    }
 
-	private boolean isChildOnTop(){
-				IContentView contentView=(IContentView)mContentView;
-				return contentView.isTop();
-	}
-
-
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		int action=event.getAction();
-		switch (action){
-			case MotionEvent.ACTION_DOWN:
-				mDispatchTargetTouchDown=false;
-				return true;
-			case MotionEvent.ACTION_MOVE:
-				float distance=event.getY()-mLastDown;
-				if(distance>0&&isChildOnTop()){
-					updateHeaderPosition(distance);
-					return true;
-				}
-				else {
-					dispatchTouchEventToContentView(event);
-				}
-				break;
-			case MotionEvent.ACTION_UP:
-			case MotionEvent.ACTION_CANCEL:
-				resetHeaderMargin();
-				mDispatchTargetTouchDown=false;
-				break;
-		}
-		return super.onTouchEvent(event);
-	}
+    private boolean isChildOnTop() {
+        IContentView contentView = (IContentView) mContentView;
+        return contentView.isTop();
+    }
 
 
-	private void dispatchTouchEventToContentView(MotionEvent event){
-		if (mDispatchTargetTouchDown) {
-			mContentView.dispatchTouchEvent(event);
-		} else {
-			MotionEvent obtain = MotionEvent.obtain(event);
-			obtain.setAction(MotionEvent.ACTION_DOWN);
-			mDispatchTargetTouchDown = true;
-			mContentView.dispatchTouchEvent(obtain);
-		}
-		mContentView.dispatchTouchEvent(event);
-	}
+    @Override
+    public void requestDisallowInterceptTouchEvent(boolean b) {
+        // Nope.
+    }
 
-	private void updateHeaderPosition(float distance){
-		if(mHeaderHeight==0){
-			mHeaderHeight=mHeader.getHeight();
-		}
-		if(distance>mHeaderHeight){
-			distance=mHeaderHeight;
-		}
-		int margin=(int) distance - mHeaderHeight;
-		int progress=(int)(distance*100/mHeaderHeight);
-		if(mPullListener!=null){
-			mPullListener.onPullProgress(progress);
-		}
-		setHeaderMargin((int) distance - mHeaderHeight);
-	}
 
-	private void setHeaderMargin(int margin){
-		LayoutParams layoutParams=(LayoutParams)mHeader.getLayoutParams();
-		layoutParams.setMargins(0, margin, 0, 0);
-		mHeader.setLayoutParams(layoutParams);
-	}
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        int action = event.getAction();
+        switch (action) {
+            case MotionEvent.ACTION_MOVE:
+                float distance = event.getY() - mLastDown;
+                if (distance > 0 && isChildOnTop()) {
+                    updateHeaderPosition(distance);
+                    return true;
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                resetHeaderMargin();
+                break;
+        }
+        return super.onTouchEvent(event);
+    }
 
-	private void resetHeaderMargin(){
-		if(mHeaderHeight==0){
-			measureView(mHeader);
-			mHeaderHeight=mHeader.getMeasuredHeight();
-		}
-		setHeaderMargin((int) -mHeaderHeight);	}
 
-	private void measureView(View child) {
-		ViewGroup.LayoutParams lp = child.getLayoutParams();
-		if(lp == null){
-			lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-		}
-		int childMeasureWidth = ViewGroup.getChildMeasureSpec(0, 0, lp.width);
-		int childMeasureHeight;
-		if(lp.height > 0){
-			childMeasureHeight = MeasureSpec.makeMeasureSpec(lp.height, MeasureSpec.EXACTLY);
-		} else {
-			childMeasureHeight = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);//未指定
-		}
-		child.measure(childMeasureWidth, childMeasureHeight);
-	}
+
+    private void updateHeaderPosition(float distance) {
+        if (mHeaderHeight == 0) {
+            mHeaderHeight = mHeader.getHeight();
+        }
+        if (distance > mHeaderHeight) {
+            distance = mHeaderHeight;
+        }
+        int margin = (int) distance - mHeaderHeight;
+        int progress = (int) (distance * 100 / mHeaderHeight);
+        if (mPullListener != null) {
+            mPullListener.onPullProgress(progress);
+        }
+        setHeaderMargin((int) distance - mHeaderHeight);
+    }
+
+    private void setHeaderMargin(int margin) {
+        LayoutParams layoutParams = (LayoutParams) mHeader.getLayoutParams();
+        layoutParams.setMargins(0, margin, 0, 0);
+        mHeader.setLayoutParams(layoutParams);
+    }
+
+    private void resetHeaderMargin() {
+        if (mHeaderHeight == 0) {
+            measureView(mHeader);
+            mHeaderHeight = mHeader.getMeasuredHeight();
+        }
+        setHeaderMargin((int) -mHeaderHeight);
+    }
+
+    private void measureView(View child) {
+        ViewGroup.LayoutParams lp = child.getLayoutParams();
+        if (lp == null) {
+            lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
+        int childMeasureWidth = ViewGroup.getChildMeasureSpec(0, 0, lp.width);
+        int childMeasureHeight;
+        if (lp.height > 0) {
+            childMeasureHeight = MeasureSpec.makeMeasureSpec(lp.height, MeasureSpec.EXACTLY);
+        } else {
+            childMeasureHeight = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);//未指定
+        }
+        child.measure(childMeasureWidth, childMeasureHeight);
+    }
 }

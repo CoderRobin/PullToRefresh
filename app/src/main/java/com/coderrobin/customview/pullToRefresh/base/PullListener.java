@@ -5,6 +5,8 @@ package com.coderrobin.customview.pullToRefresh.base;
  */
 public interface PullListener {
     void onPullStart();
+
     void onPullEnd();
+
     void onPullProgress(int progress);
 }

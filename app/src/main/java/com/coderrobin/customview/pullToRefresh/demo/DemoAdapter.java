@@ -12,10 +12,11 @@ import com.coderrobin.customview.R;
 /**
  * Created by renzhibin on 15/11/29.
  */
-public class DemoAdapter extends BaseAdapter{
+public class DemoAdapter extends BaseAdapter {
     private Context mContext;
-    public DemoAdapter(Context pContext){
-        mContext=pContext;
+
+    public DemoAdapter(Context pContext) {
+        mContext = pContext;
     }
 
     @Override
@@ -36,18 +37,18 @@ public class DemoAdapter extends BaseAdapter{
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         TextView textView;
-        if(view==null){
-            view= LayoutInflater.from(mContext).inflate(R.layout.demo_item,null);
-            textView=(TextView)view.findViewById(R.id.textview);
-            ViewHolder viewHolder=new ViewHolder(textView);
+        if (view == null) {
+            view = LayoutInflater.from(mContext).inflate(R.layout.demo_item, null);
+            textView = (TextView) view.findViewById(R.id.textview);
+            ViewHolder viewHolder = new ViewHolder(textView);
             view.setTag(viewHolder);
         }
-        ViewHolder viewHolder=(ViewHolder)view.getTag();
-        viewHolder.textview.setText(i+"");
+        ViewHolder viewHolder = (ViewHolder) view.getTag();
+        viewHolder.textview.setText(i + "");
         return view;
     }
 
-    private static class ViewHolder{
+    private static class ViewHolder {
         TextView textview;
 
         public ViewHolder(TextView textview) {

@@ -9,7 +9,7 @@ import com.coderrobin.customview.pullToRefresh.base.PullListener;
 /**
  * Created by renzhibin on 15/11/29.
  */
-public class DemoHeader extends LinearLayout implements PullListener{
+public class DemoHeader extends LinearLayout implements PullListener {
     public DemoHeader(Context context) {
         super(context);
     }

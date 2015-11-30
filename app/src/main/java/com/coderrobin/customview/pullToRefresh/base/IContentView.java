@@ -25,13 +25,10 @@
 package com.coderrobin.customview.pullToRefresh.base;
 
 
-
-
-
 public interface IContentView {
 
-	boolean isTop();
+    boolean isTop();
 
-	boolean isBottom();
+    boolean isBottom();
 
 }
