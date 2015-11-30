@@ -22,14 +22,14 @@
  * THE SOFTWARE.
  */
 
-package com.coderrobin.customview.pullToRefresh.impl;
+package com.coderrobin.customview.pulltofresh.impl;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.ListView;
 
-import com.coderrobin.customview.pullToRefresh.base.IContentView;
+import com.coderrobin.customview.pulltofresh.base.IContentView;
 
 
 public class PullToFreshListView extends ListView implements IContentView {

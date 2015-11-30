@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".pullToRefresh.demo.PullToRefreshActivity"
+            android:name=".pulltofresh.demo.PullToRefreshActivity"
             android:label="@string/title_activity_pull_to_refresh">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

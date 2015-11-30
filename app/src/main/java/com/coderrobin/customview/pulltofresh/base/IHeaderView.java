@@ -1,4 +1,4 @@
-package com.coderrobin.customview.pullToRefresh.base;
+package com.coderrobin.customview.pulltofresh.base;
 
 /**
  * Created by renzhibin on 15/11/30.

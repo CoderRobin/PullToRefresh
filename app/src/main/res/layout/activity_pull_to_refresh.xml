@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.coderrobin.customview.pullToRefresh.base.PullToRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.coderrobin.customview.pulltofresh.base.PullToRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.coderrobin.customview.pullToRefresh.impl.PullToFreshHeader
+    <com.coderrobin.customview.pulltofresh.impl.PullToFreshHeader
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="@android:color/black" />
 
-    <com.coderrobin.customview.pullToRefresh.impl.PullToFreshListView
+    <com.coderrobin.customview.pulltofresh.impl.PullToFreshListView
         android:id="@+id/pull_to_fresh_listview"
         android:layout_width="match_parent"
         android:layout_height="500dp" />
 
 
-</com.coderrobin.customview.pullToRefresh.base.PullToRefreshLayout>
+</com.coderrobin.customview.pulltofresh.base.PullToRefreshLayout>

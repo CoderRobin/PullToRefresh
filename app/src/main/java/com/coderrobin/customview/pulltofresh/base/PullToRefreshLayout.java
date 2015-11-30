@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package com.coderrobin.customview.pullToRefresh.base;
+package com.coderrobin.customview.pulltofresh.base;
 
 
 import android.content.Context;

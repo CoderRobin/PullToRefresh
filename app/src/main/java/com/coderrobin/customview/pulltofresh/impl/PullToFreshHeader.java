@@ -1,10 +1,10 @@
-package com.coderrobin.customview.pullToRefresh.impl;
+package com.coderrobin.customview.pulltofresh.impl;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
-import com.coderrobin.customview.pullToRefresh.base.IHeaderView;
+import com.coderrobin.customview.pulltofresh.base.IHeaderView;
 
 /**
  * Created by renzhibin on 15/11/30.
