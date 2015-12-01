@@ -148,7 +148,7 @@ class PullToRefreshLayout extends LinearLayout {
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                ((IHeaderView)mHeader).hide();
+                ((IHeaderView)mHeader).onFinishDrag();
                 break;
         }
         return super.onTouchEvent(event);

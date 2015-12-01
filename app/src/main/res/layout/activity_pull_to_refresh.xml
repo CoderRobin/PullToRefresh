@@ -4,11 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.coderrobin.customview.pulltofresh.impl.PullToFreshHeader
+    <com.coderrobin.customview.pulltofresh.impl.PullToFreshHeader xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@android:color/black" />
+        android:background="@android:color/black"
+        android:gravity="center_horizontal">
+
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            style="?android:progressBarStyleSmall"/>
+    </com.coderrobin.customview.pulltofresh.impl.PullToFreshHeader>
 
     <com.coderrobin.customview.pulltofresh.impl.PullToFreshListView
         android:id="@+id/pull_to_fresh_listview"

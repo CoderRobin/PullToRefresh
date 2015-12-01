@@ -8,4 +8,7 @@ public interface IHeaderView {
     void hide();
     int getDragTotalHeight();
     void onProgress(int progress);
+    void onFinishDrag();
+    void onLoadFinish();
+    void setOnRefreshListener(RefreshListener pRefreshListener);
 }

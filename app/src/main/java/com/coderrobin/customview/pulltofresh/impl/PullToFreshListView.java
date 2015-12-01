@@ -26,7 +26,6 @@ package com.coderrobin.customview.pulltofresh.impl;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.ListView;
 
 import com.coderrobin.customview.pulltofresh.base.IContentView;
@@ -47,10 +46,6 @@ public class PullToFreshListView extends ListView implements IContentView {
 
     @Override
     public boolean isTop() {
-
-        Log.d("coderrobin",
-                "### first pos = " + getFirstVisiblePosition()
-                        + ", getTop= " + getChildAt(0).getTop() + ":" + getChildAt(0).getPaddingTop());
         return getFirstVisiblePosition() == 0
                 && getChildAt(0).getTop() >= getChildAt(0).getPaddingTop();
     }
