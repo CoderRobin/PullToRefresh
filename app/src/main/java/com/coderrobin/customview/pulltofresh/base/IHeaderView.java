@@ -6,8 +6,7 @@ package com.coderrobin.customview.pulltofresh.base;
 public interface IHeaderView {
     void show();
     void hide();
-    int getDragTotalHeight();
-    void onProgress(int progress);
+    void onDrag(int distance);
     void onFinishDrag();
     void onLoadFinish();
     void setOnRefreshListener(RefreshListener pRefreshListener);

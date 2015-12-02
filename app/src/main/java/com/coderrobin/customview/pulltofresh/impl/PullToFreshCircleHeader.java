@@ -1,7 +1,5 @@
 package com.coderrobin.customview.pulltofresh.impl;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.util.AttributeSet;
@@ -13,32 +11,34 @@ import android.widget.ProgressBar;
 import com.coderrobin.customview.R;
 import com.coderrobin.customview.pulltofresh.base.IHeaderView;
 import com.coderrobin.customview.pulltofresh.base.RefreshListener;
+import com.nineoldandroids.view.ViewHelper;
 
 /**
  * Created by renzhibin on 15/11/30.
  */
-public class PullToFreshHeader extends LinearLayout implements IHeaderView {
+public class PullToFreshCircleHeader extends LinearLayout implements IHeaderView {
     private static final int REFRESH_PROGRESS=60;
     private static final int ANIMATION_TIME=200;
     private RefreshListener mRefreshListener;
     private int mProgress;
     private ProgressBar mProgressBar;
-    public PullToFreshHeader(Context context) {
+    public PullToFreshCircleHeader(Context context) {
         super(context);
+        init();
     }
 
-    public PullToFreshHeader(Context context, AttributeSet attrs) {
+    public PullToFreshCircleHeader(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public PullToFreshHeader(Context context, AttributeSet attrs, int defStyle) {
+    public PullToFreshCircleHeader(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init();
     }
 
     private void init(){
-        View.inflate(getContext(),R.layout.pull_header,this);
+        View.inflate(getContext(), R.layout.pull_header, this);
     }
 
     @Override
@@ -49,11 +49,11 @@ public class PullToFreshHeader extends LinearLayout implements IHeaderView {
 
     private void initViews(){
         mProgressBar=(ProgressBar)findViewById(R.id.progressbar);
-        mProgressBar.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.VISIBLE);
     }
 
     public int getDragTotalHeight() {
-        return getHeight();
+        return 500;
     }
 
     @Override
@@ -76,35 +76,26 @@ public class PullToFreshHeader extends LinearLayout implements IHeaderView {
 
     @Override
     public void hide() {
-        resetHeaderMargin();
     }
 
 
 
     @Override
     public void onDrag(int distance) {
-        if (distance > getDragTotalHeight()) {
-            distance = getDragTotalHeight();
+        if(distance>getDragTotalHeight()){
+            distance=getDragTotalHeight();
         }
-        int progress = (int) (distance * 100 / getDragTotalHeight());
-        Log.v("coderrobin", "distance:" + distance + ":" + getDragTotalHeight() + ":" + progress);
-        mProgress = progress;
-        setMargin(-getDragTotalHeight()+distance);
+        mProgress = (int) (distance * 100 / getDragTotalHeight());
+        setPosition(distance);
     }
 
-    private void setMargin(int margin) {
-        LayoutParams layoutParams = (LayoutParams) getLayoutParams();
-        layoutParams.setMargins(0, margin, 0, 0);
-        setLayoutParams(layoutParams);
+    private void setPosition(int distance) {
+        Log.v("setPosition", distance+"");
+        ViewHelper.setTranslationY(this, distance);
+       // ViewHelper.setTranslationY(mProgressBar, distance);
     }
 
-    private int getMargin(){
-        return ((LayoutParams) getLayoutParams()).topMargin;
-    }
 
-    private void resetHeaderMargin() {
-        setMargin((int) -getMeasuredHeight());
-    }
 
     public void setOnRefreshListener(RefreshListener pRefreshListener){
         mRefreshListener=pRefreshListener;
@@ -114,26 +105,18 @@ public class PullToFreshHeader extends LinearLayout implements IHeaderView {
 
     @Override
     public void onLoadFinish() {
-        mProgressBar.setVisibility(View.GONE);
         startReturnAnimation();
     }
 
     private void startReturnAnimation(){
-        ObjectAnimator objectAnimator=ObjectAnimator.ofInt(this,"margin",getMargin(),-getMeasuredHeight());
+        ObjectAnimator objectAnimator=ObjectAnimator.ofFloat(this, "translationY", getTranslationY(), 0);
         objectAnimator.setDuration(ANIMATION_TIME);
         objectAnimator.start();
     }
 
     private void startLoadAnimation(){
-        ObjectAnimator objectAnimator=ObjectAnimator.ofInt(this,"margin",getMargin(),0);
+        ObjectAnimator objectAnimator=ObjectAnimator.ofFloat(this, "translationY", getTranslationY(), getDragTotalHeight());
         objectAnimator.setDuration(ANIMATION_TIME);
-        objectAnimator.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                mProgressBar.setVisibility(View.VISIBLE);
-            }
-        });
         objectAnimator.start();
     }
 

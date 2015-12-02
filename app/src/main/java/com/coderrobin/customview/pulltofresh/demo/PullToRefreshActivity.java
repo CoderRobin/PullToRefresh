@@ -15,7 +15,7 @@ public class PullToRefreshActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pull_to_refresh);
+        setContentView(R.layout.activity_pull_to_refresh_circle);
         ListView pullToFreshListView = (ListView) findViewById(R.id.pull_to_fresh_listview);
         pullToFreshListView.setAdapter(new DemoAdapter(this));
         final IHeaderView headerView = (IHeaderView) findViewById(R.id.header);

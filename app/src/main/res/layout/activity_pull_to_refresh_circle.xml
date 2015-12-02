@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.coderrobin.customview.pulltofresh.impl.PullToFreshHeader xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.coderrobin.customview.pulltofresh.impl.PullToFreshCircleHeader xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@android:color/black"
+        android:layout_marginTop="-100dp"
         android:gravity="center_horizontal">
-    </com.coderrobin.customview.pulltofresh.impl.PullToFreshHeader>
+    </com.coderrobin.customview.pulltofresh.impl.PullToFreshCircleHeader>
 
     <com.coderrobin.customview.pulltofresh.impl.PullToFreshListView
         android:id="@+id/pull_to_fresh_listview"

@@ -142,7 +142,7 @@ class PullToRefreshLayout extends LinearLayout {
             case MotionEvent.ACTION_MOVE:
                 float distance = event.getY() - mLastDown;
                 if (distance > 0 && isChildOnTop()) {
-                    updateHeaderProgress(distance);
+                    updateHeaderDistance((int)distance);
                     return true;
                 }
                 break;
@@ -156,14 +156,8 @@ class PullToRefreshLayout extends LinearLayout {
 
 
 
-    private void updateHeaderProgress(float distance) {
-        int headerDragTotalHeight=((IHeaderView)mHeader).getDragTotalHeight();
-        if (distance > headerDragTotalHeight) {
-            distance = headerDragTotalHeight;
-        }
-        int margin = (int) distance - headerDragTotalHeight;
-        int progress = (int) (distance * 100 / headerDragTotalHeight);
-        ((IHeaderView)mHeader).onProgress(progress);
+    private void updateHeaderDistance(int distance) {
+        ((IHeaderView)mHeader).onDrag(distance);
     }
 
 
